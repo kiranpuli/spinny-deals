@@ -270,36 +270,6 @@
     }
   },
   {
-    "id": 32260131,
-    "make": "Hyundai",
-    "model": "Grand i10",
-    "variant": "Asta AT 1.2 Kappa VTVT",
-    "make_year": 2015,
-    "price": 410000.0,
-    "mileage": 67618,
-    "fuel_type": "petrol",
-    "transmission": "automatic",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10/asta-at-12-kappa-vtvt-kengeri-2015/32260131/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-09-26/02997eebd46a499cbe9d6f14cb80aa35/raw/file.JPG",
-    "hub": "Mysore Road, Kengeri",
-    "analysis": {
-      "pros": [
-        "Feather-light clutch & steering for traffic",
-        "Spares available at every neighborhood garage",
-        "Upright seating with clear visibility"
-      ],
-      "cons": [
-        "1.1L engine strains on highway inclines",
-        "City fuel economy ~11-12 kmpl with AC",
-        "Dated dashboard styling"
-      ],
-      "maintenance_yr": "\u20b94,000 - \u20b95,000",
-      "est_buyback_2yr": 291100,
-      "total_loss_2yr": 118900.0,
-      "monthly_loss": 4954
-    }
-  },
-  {
     "id": 28284084,
     "make": "Maruti Suzuki",
     "model": "Swift",
@@ -447,64 +417,6 @@
       "est_buyback_2yr": 332150,
       "total_loss_2yr": 122850.0,
       "monthly_loss": 5119
-    }
-  },
-  {
-    "id": 33122785,
-    "make": "Hyundai",
-    "model": "Elite i20",
-    "variant": "Sportz 1.2",
-    "make_year": 2016,
-    "price": 466000.0,
-    "mileage": 69736,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/elite-i20/sportz-12-2016/33122785/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-11/b1d17f9d22544bfbb67723c50575db10/raw/file.JPG",
-    "hub": "Hunasamaranahalli, Yelahanka",
-    "analysis": {
-      "pros": [
-        "Reliable brand backing",
-        "Good city drivability",
-        "Low maintenance"
-      ],
-      "cons": [
-        "Regular periodic maintenance required"
-      ],
-      "maintenance_yr": "\u20b95,000 - \u20b96,500",
-      "est_buyback_2yr": 326200,
-      "total_loss_2yr": 139800.0,
-      "monthly_loss": 5825
-    }
-  },
-  {
-    "id": 33047985,
-    "make": "Honda",
-    "model": "Amaze",
-    "variant": "1.5 S i-DTEC",
-    "make_year": 2017,
-    "price": 468000.0,
-    "mileage": 37341,
-    "fuel_type": "diesel",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/honda/amaze/15-s-idtec-kengeri-2017/33047985/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-11/131c4aa26f354e98bb6adeabe9293ddc/raw/file.JPG",
-    "hub": "Mysore Road, Kengeri",
-    "analysis": {
-      "pros": [
-        "Massive 400L boot for outstation & airport runs",
-        "Spacious rear legroom with great resale demand",
-        "Engine easily lasts 200,000+ km"
-      ],
-      "cons": [
-        "Soft rear suspension can scrape tall speedbumps",
-        "Lightweight door build compared to Polo",
-        "Basic cabin sound insulation"
-      ],
-      "maintenance_yr": "\u20b95,000 - \u20b96,500",
-      "est_buyback_2yr": 341640,
-      "total_loss_2yr": 126360.0,
-      "monthly_loss": 5265
     }
   },
   {
