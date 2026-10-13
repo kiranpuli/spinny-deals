@@ -300,6 +300,36 @@
     }
   },
   {
+    "id": 32277280,
+    "make": "Hyundai",
+    "model": "Grand i10",
+    "variant": "Asta 1.2 Kappa VTVT (O)",
+    "make_year": 2015,
+    "price": 432000.0,
+    "mileage": 36511,
+    "fuel_type": "petrol",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10/asta-12-kappa-vtvt-o-electronic-city-phase-i-2016/32277280/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-09-25/647d2009e6474ddc920b0d1982d9169f/raw/file.JPG",
+    "hub": "Electronic City, Bangalore",
+    "analysis": {
+      "pros": [
+        "Feather-light clutch & steering for traffic",
+        "Spares available at every neighborhood garage",
+        "Upright seating with clear visibility"
+      ],
+      "cons": [
+        "1.1L engine strains on highway inclines",
+        "City fuel economy ~11-12 kmpl with AC",
+        "Dated dashboard styling"
+      ],
+      "maintenance_yr": "\u20b94,000 - \u20b95,000",
+      "est_buyback_2yr": 306720,
+      "total_loss_2yr": 125280.0,
+      "monthly_loss": 5220
+    }
+  },
+  {
     "id": 32323116,
     "make": "Hyundai",
     "model": "Grand i10",
@@ -417,6 +447,36 @@
       "est_buyback_2yr": 332150,
       "total_loss_2yr": 122850.0,
       "monthly_loss": 5119
+    }
+  },
+  {
+    "id": 33047985,
+    "make": "Honda",
+    "model": "Amaze",
+    "variant": "1.5 S i-DTEC",
+    "make_year": 2017,
+    "price": 468000.0,
+    "mileage": 37341,
+    "fuel_type": "diesel",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/honda/amaze/15-s-idtec-kengeri-2017/33047985/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-11/131c4aa26f354e98bb6adeabe9293ddc/raw/file.JPG",
+    "hub": "Mysore Road, Kengeri",
+    "analysis": {
+      "pros": [
+        "Massive 400L boot for outstation & airport runs",
+        "Spacious rear legroom with great resale demand",
+        "Engine easily lasts 200,000+ km"
+      ],
+      "cons": [
+        "Soft rear suspension can scrape tall speedbumps",
+        "Lightweight door build compared to Polo",
+        "Basic cabin sound insulation"
+      ],
+      "maintenance_yr": "\u20b95,000 - \u20b96,500",
+      "est_buyback_2yr": 341640,
+      "total_loss_2yr": 126360.0,
+      "monthly_loss": 5265
     }
   },
   {
