@@ -8,15 +8,9 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
-  update-and-deploy:
+  update-deals:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -31,25 +25,13 @@ jobs:
         run: |
           pip install requests
 
-      - name: Fetch Fresh Bangalore Deals
+      - name: Fetch Fresh Bangalore Deals & Rebuild UI
         run: |
           python spinny_checker.py --city bangalore --max-price 500000
 
-      - name: Commit and Push Updated Data (if changed)
+      - name: Commit and Push Updated Data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html deals.html clean_bangalore_cars.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: refresh Bangalore deals [skip ci]" && git push)
-
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: refresh Bangalore deals" && git push)

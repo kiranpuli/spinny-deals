@@ -60,6 +60,36 @@
     }
   },
   {
+    "id": 33261347,
+    "make": "Hyundai",
+    "model": "i10",
+    "variant": "Magna 1.1 iRDE2",
+    "make_year": 2015,
+    "price": 336000.0,
+    "mileage": 36479,
+    "fuel_type": "petrol",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/i10/magna-11-irde2-2015/33261347/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-12/347e275defa745c49a1b80d1aae65e4e/raw/file.JPG",
+    "hub": "Mantri Mall, Malleshwaram",
+    "analysis": {
+      "pros": [
+        "Feather-light clutch & steering for traffic",
+        "Spares available at every neighborhood garage",
+        "Upright seating with clear visibility"
+      ],
+      "cons": [
+        "1.1L engine strains on highway inclines",
+        "City fuel economy ~11-12 kmpl with AC",
+        "Dated dashboard styling"
+      ],
+      "maintenance_yr": "\u20b94,000 - \u20b95,000",
+      "est_buyback_2yr": 238560,
+      "total_loss_2yr": 97440.0,
+      "monthly_loss": 4060
+    }
+  },
+  {
     "id": 32635048,
     "make": "Ford",
     "model": "Figo",
@@ -87,36 +117,6 @@
       "est_buyback_2yr": 236510,
       "total_loss_2yr": 116490.0,
       "monthly_loss": 4854
-    }
-  },
-  {
-    "id": 32875626,
-    "make": "Honda",
-    "model": "Amaze",
-    "variant": "1.2 S i-VTEC",
-    "make_year": 2015,
-    "price": 373000.0,
-    "mileage": 71433,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/honda/amaze/12-s-ivtec-2016/32875626/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-11/8a47423c70c8472cb8ec2e01ba983d63/raw/file.JPG",
-    "hub": "Nexus Shanti Niketan Mall, Whitefield",
-    "analysis": {
-      "pros": [
-        "Massive 400L boot for outstation & airport runs",
-        "Spacious rear legroom with great resale demand",
-        "Engine easily lasts 200,000+ km"
-      ],
-      "cons": [
-        "Soft rear suspension can scrape tall speedbumps",
-        "Lightweight door build compared to Polo",
-        "Basic cabin sound insulation"
-      ],
-      "maintenance_yr": "\u20b95,000 - \u20b96,500",
-      "est_buyback_2yr": 272290,
-      "total_loss_2yr": 100710.0,
-      "monthly_loss": 4196
     }
   },
   {
@@ -275,7 +275,7 @@
     "model": "Swift",
     "variant": "VXi",
     "make_year": 2016,
-    "price": 422619.0,
+    "price": 416904.0,
     "mileage": 82052,
     "fuel_type": "petrol",
     "transmission": "manual",
@@ -294,9 +294,9 @@
         "Ride is firm over broken tarmac"
       ],
       "maintenance_yr": "\u20b94,000 - \u20b95,500",
-      "est_buyback_2yr": 329643,
-      "total_loss_2yr": 92976.0,
-      "monthly_loss": 3874
+      "est_buyback_2yr": 325185,
+      "total_loss_2yr": 91719.0,
+      "monthly_loss": 3822
     }
   },
   {
@@ -417,36 +417,6 @@
       "est_buyback_2yr": 332150,
       "total_loss_2yr": 122850.0,
       "monthly_loss": 5119
-    }
-  },
-  {
-    "id": 32928094,
-    "make": "Hyundai",
-    "model": "Grand i10 Nios",
-    "variant": "Era 1.2 Kappa VTVT",
-    "make_year": 2023,
-    "price": 469000.0,
-    "mileage": 38605,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10-nios/era-12-kappa-vtvt-2023-2023/32928094/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-11/f494482abdba4fb8972c16624f815533/raw/file.JPG",
-    "hub": "Hunasamaranahalli, Yelahanka",
-    "analysis": {
-      "pros": [
-        "Feather-light clutch & steering for traffic",
-        "Spares available at every neighborhood garage",
-        "Upright seating with clear visibility"
-      ],
-      "cons": [
-        "1.1L engine strains on highway inclines",
-        "City fuel economy ~11-12 kmpl with AC",
-        "Dated dashboard styling"
-      ],
-      "maintenance_yr": "\u20b94,000 - \u20b95,000",
-      "est_buyback_2yr": 332990,
-      "total_loss_2yr": 136010.0,
-      "monthly_loss": 5667
     }
   },
   {
