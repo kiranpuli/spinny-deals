@@ -60,36 +60,6 @@
     }
   },
   {
-    "id": 33261347,
-    "make": "Hyundai",
-    "model": "i10",
-    "variant": "Magna 1.1 iRDE2",
-    "make_year": 2015,
-    "price": 336000.0,
-    "mileage": 36479,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/i10/magna-11-irde2-2015/33261347/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-12/347e275defa745c49a1b80d1aae65e4e/raw/file.JPG",
-    "hub": "Mantri Mall, Malleshwaram",
-    "analysis": {
-      "pros": [
-        "Feather-light clutch & steering for traffic",
-        "Spares available at every neighborhood garage",
-        "Upright seating with clear visibility"
-      ],
-      "cons": [
-        "1.1L engine strains on highway inclines",
-        "City fuel economy ~11-12 kmpl with AC",
-        "Dated dashboard styling"
-      ],
-      "maintenance_yr": "\u20b94,000 - \u20b95,000",
-      "est_buyback_2yr": 238560,
-      "total_loss_2yr": 97440.0,
-      "monthly_loss": 4060
-    }
-  },
-  {
     "id": 32635048,
     "make": "Ford",
     "model": "Figo",
@@ -117,36 +87,6 @@
       "est_buyback_2yr": 236510,
       "total_loss_2yr": 116490.0,
       "monthly_loss": 4854
-    }
-  },
-  {
-    "id": 31770101,
-    "make": "Ford",
-    "model": "Figo Aspire",
-    "variant": "Titanium 1.2 Ti-VCT",
-    "make_year": 2016,
-    "price": 383000.0,
-    "mileage": 82108,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/ford/figo-aspire/titanium-12-tivct-malleshwaram-2016/31770101/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-09-13/382279c08db64582986ec451dd49c45b/raw/file.JPG",
-    "hub": "Mantri Mall, Malleshwaram",
-    "analysis": {
-      "pros": [
-        "Tank-like European build quality & safety",
-        "Plush suspension over Bangalore potholes",
-        "Excellent highway high-speed stability"
-      ],
-      "cons": [
-        "Ford service network is independent/FNG reliant",
-        "Weak low-end torque in 2nd gear traffic",
-        "Slightly heavier clutch"
-      ],
-      "maintenance_yr": "\u20b95,500 - \u20b97,000",
-      "est_buyback_2yr": 256610,
-      "total_loss_2yr": 126390.0,
-      "monthly_loss": 5266
     }
   },
   {
@@ -240,36 +180,6 @@
     }
   },
   {
-    "id": 31528496,
-    "make": "Honda",
-    "model": "Jazz",
-    "variant": "V Petrol",
-    "make_year": 2015,
-    "price": 407000.0,
-    "mileage": 76495,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/honda/jazz/v-petrol-2015/31528496/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-05/e53e044db4d94d679de85a4b85d6fb43/raw/file.JPG",
-    "hub": "Nexus Shanti Niketan Mall, Whitefield",
-    "analysis": {
-      "pros": [
-        "Incredible interior space & Magic Seats practicality",
-        "Large glasshouse with zero blind spots",
-        "Honda reliability"
-      ],
-      "cons": [
-        "Wide body takes care in narrow alleys",
-        "Rubberband CVT (if AT) or tall gearing",
-        "Priced higher than Brio"
-      ],
-      "maintenance_yr": "\u20b95,000 - \u20b96,500",
-      "est_buyback_2yr": 301180,
-      "total_loss_2yr": 105820.0,
-      "monthly_loss": 4409
-    }
-  },
-  {
     "id": 32652144,
     "make": "Hyundai",
     "model": "Grand i10",
@@ -360,36 +270,6 @@
     }
   },
   {
-    "id": 32323116,
-    "make": "Hyundai",
-    "model": "Grand i10",
-    "variant": "Sportz (O) 1.2 Kappa VTVT",
-    "make_year": 2017,
-    "price": 433000.0,
-    "mileage": 62546,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10/sportz-o-12-kappa-vtvt-2017/32323116/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-09-15/45c2bf650c004c7787774d222eef8640/raw/file.JPG",
-    "hub": "Electronic City, Bangalore",
-    "analysis": {
-      "pros": [
-        "Feather-light clutch & steering for traffic",
-        "Spares available at every neighborhood garage",
-        "Upright seating with clear visibility"
-      ],
-      "cons": [
-        "1.1L engine strains on highway inclines",
-        "City fuel economy ~11-12 kmpl with AC",
-        "Dated dashboard styling"
-      ],
-      "maintenance_yr": "\u20b94,000 - \u20b95,000",
-      "est_buyback_2yr": 307430,
-      "total_loss_2yr": 125570.0,
-      "monthly_loss": 5232
-    }
-  },
-  {
     "id": 32007325,
     "make": "Hyundai",
     "model": "Grand i10",
@@ -450,33 +330,31 @@
     }
   },
   {
-    "id": 32928094,
-    "make": "Hyundai",
-    "model": "Grand i10 Nios",
-    "variant": "Era 1.2 Kappa VTVT",
-    "make_year": 2023,
-    "price": 469000.0,
-    "mileage": 38605,
+    "id": 32796033,
+    "make": "Ford",
+    "model": "Freestyle",
+    "variant": "Trend Plus 1.2 Ti-VCT",
+    "make_year": 2019,
+    "price": 463000.0,
+    "mileage": 59997,
     "fuel_type": "petrol",
     "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10-nios/era-12-kappa-vtvt-2023-2023/32928094/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-11/f494482abdba4fb8972c16624f815533/raw/file.JPG",
-    "hub": "Hunasamaranahalli, Yelahanka",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/ford/freestyle/trend-plus-12-tivct-kengeri-2019/32796033/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-03/232b9cbc1e47456aae47c72e0d82e4bb/raw/file.JPG",
+    "hub": "Mysore Road, Kengeri",
     "analysis": {
       "pros": [
-        "Feather-light clutch & steering for traffic",
-        "Spares available at every neighborhood garage",
-        "Upright seating with clear visibility"
+        "Reliable brand backing",
+        "Good city drivability",
+        "Low maintenance"
       ],
       "cons": [
-        "1.1L engine strains on highway inclines",
-        "City fuel economy ~11-12 kmpl with AC",
-        "Dated dashboard styling"
+        "Regular periodic maintenance required"
       ],
-      "maintenance_yr": "\u20b94,000 - \u20b95,000",
-      "est_buyback_2yr": 332990,
-      "total_loss_2yr": 136010.0,
-      "monthly_loss": 5667
+      "maintenance_yr": "\u20b95,000 - \u20b96,500",
+      "est_buyback_2yr": 324100,
+      "total_loss_2yr": 138900.0,
+      "monthly_loss": 5788
     }
   },
   {
