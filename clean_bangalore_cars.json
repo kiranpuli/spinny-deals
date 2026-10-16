@@ -180,36 +180,6 @@
     }
   },
   {
-    "id": 32652144,
-    "make": "Hyundai",
-    "model": "Grand i10",
-    "variant": "Sportz 1.2 Kappa VTVT",
-    "make_year": 2017,
-    "price": 414000.0,
-    "mileage": 63041,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10/sportz-12-kappa-vtvt-btm-layout-2017/32652144/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-10/ac6553d5ed09474ab2d248944d7bc2e2/raw/file.JPG",
-    "hub": "Vega City Mall, BTM Layout",
-    "analysis": {
-      "pros": [
-        "Feather-light clutch & steering for traffic",
-        "Spares available at every neighborhood garage",
-        "Upright seating with clear visibility"
-      ],
-      "cons": [
-        "1.1L engine strains on highway inclines",
-        "City fuel economy ~11-12 kmpl with AC",
-        "Dated dashboard styling"
-      ],
-      "maintenance_yr": "\u20b94,000 - \u20b95,000",
-      "est_buyback_2yr": 293940,
-      "total_loss_2yr": 120060.0,
-      "monthly_loss": 5002
-    }
-  },
-  {
     "id": 28284084,
     "make": "Maruti Suzuki",
     "model": "Swift",
@@ -300,6 +270,36 @@
     }
   },
   {
+    "id": 33057066,
+    "make": "Hyundai",
+    "model": "Grand i10 Nios",
+    "variant": "Era 1.2 Kappa VTVT",
+    "make_year": 2021,
+    "price": 443000.0,
+    "mileage": 57673,
+    "fuel_type": "petrol",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10-nios/era-12-kappa-vtvt-2021/33057066/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-13/3e699ac93f4f42b39785e828a940943a/raw/file.JPG",
+    "hub": "VR Mall, Whitefield",
+    "analysis": {
+      "pros": [
+        "Feather-light clutch & steering for traffic",
+        "Spares available at every neighborhood garage",
+        "Upright seating with clear visibility"
+      ],
+      "cons": [
+        "1.1L engine strains on highway inclines",
+        "City fuel economy ~11-12 kmpl with AC",
+        "Dated dashboard styling"
+      ],
+      "maintenance_yr": "\u20b94,000 - \u20b95,000",
+      "est_buyback_2yr": 314530,
+      "total_loss_2yr": 128470.0,
+      "monthly_loss": 5353
+    }
+  },
+  {
     "id": 27881469,
     "make": "Honda",
     "model": "Amaze",
@@ -355,6 +355,62 @@
       "est_buyback_2yr": 324100,
       "total_loss_2yr": 138900.0,
       "monthly_loss": 5788
+    }
+  },
+  {
+    "id": 33122785,
+    "make": "Hyundai",
+    "model": "Elite i20",
+    "variant": "Sportz 1.2",
+    "make_year": 2016,
+    "price": 466000.0,
+    "mileage": 69736,
+    "fuel_type": "petrol",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/elite-i20/sportz-12-2016/33122785/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-11/b1d17f9d22544bfbb67723c50575db10/raw/file.JPG",
+    "hub": "Hunasamaranahalli, Yelahanka",
+    "analysis": {
+      "pros": [
+        "Reliable brand backing",
+        "Good city drivability",
+        "Low maintenance"
+      ],
+      "cons": [
+        "Regular periodic maintenance required"
+      ],
+      "maintenance_yr": "\u20b95,000 - \u20b96,500",
+      "est_buyback_2yr": 326200,
+      "total_loss_2yr": 139800.0,
+      "monthly_loss": 5825
+    }
+  },
+  {
+    "id": 33227726,
+    "make": "Maruti Suzuki",
+    "model": "Ciaz",
+    "variant": "Sigma 1.4 MT",
+    "make_year": 2017,
+    "price": 476000.0,
+    "mileage": 84215,
+    "fuel_type": "petrol",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/maruti-suzuki/ciaz/sigma-14-mt-2017/33227726/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-15/75f73a8026da452a8db01bcb84f0effd/raw/file.JPG",
+    "hub": "Mysore Road, Kengeri",
+    "analysis": {
+      "pros": [
+        "Reliable brand backing",
+        "Good city drivability",
+        "Low maintenance"
+      ],
+      "cons": [
+        "Regular periodic maintenance required"
+      ],
+      "maintenance_yr": "\u20b95,000 - \u20b96,500",
+      "est_buyback_2yr": 333200,
+      "total_loss_2yr": 142800.0,
+      "monthly_loss": 5950
     }
   },
   {
