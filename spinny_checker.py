@@ -21,8 +21,9 @@ PRESTIGE_MODELS = [
     "rapid", "fabia",
     "etios", "glanza", "yaris",
     "i20", "elite i20", "verna", "creta", "venue", "xcent", "grand i10", "i10",
-    "baleno", "ciaz", "swift", "dzire", "brezza", "scross", "ignis",
+    "baleno", "ciaz", "swift", "dzire", "brezza", "scross", "ignis", "a-star",
     "ecosport", "figo", "aspire", "freestyle",
+    "tiago", "altroz", "tigor", "zest",
 ]
 
 EXCLUDE_MODELS = [
@@ -90,6 +91,24 @@ KNOWLEDGE_BASE = {
         "cons": ["Thinner sheet metal", "Common on roads (less exclusivity)", "Ride is firm over broken tarmac"],
         "maintenance_yr": "₹4,000 - ₹5,500",
         "retention_pct": 0.78,
+    },
+    "etios": {
+        "pros": ["Indestructible Toyota engine & chassis", "Massive 595L boot space", "Plush ride quality over potholes"],
+        "cons": ["Basic cab-like dashboard ergonomics", "Plain exterior styling", "Larger turning radius"],
+        "maintenance_yr": "₹4,500 - ₹6,000",
+        "retention_pct": 0.72,
+    },
+    "a-star": {
+        "pros": ["Super compact - slots into tightest parking spots", "Torque converter AT is smoother than modern AMTs", "Maruti parts cost peanuts"],
+        "cons": ["Tight rear legroom", "Small 180L boot", "Outdated interior trim"],
+        "maintenance_yr": "₹3,500 - ₹4,500",
+        "retention_pct": 0.70,
+    },
+    "tiago": {
+        "pros": ["Solid 4-star Global NCAP crash safety", "Best-in-class 8-speaker Harman sound system", "Thick European sheet metal feel"],
+        "cons": ["3-cylinder Revotron engine vibrates at idle", "Tata service center experience varies", "Clutch has slightly long travel"],
+        "maintenance_yr": "₹5,000 - ₹6,500",
+        "retention_pct": 0.72,
     },
 }
 
@@ -188,14 +207,9 @@ def enrich_cars(cars):
 
 def fetch_cheapest_cars(city, max_price=500000):
     cars = []
-    for page in range(1, 4):
+    for page in range(1, 12):
         params = {
             "city": city,
-            "product_type": "cars",
-            "category": "used",
-            "availability": "available,in-refurb",
-            "car_category": "assured,assured-plus",
-            "make": "honda,volkswagen,skoda,toyota,hyundai,maruti-suzuki,ford",
             "max_price": str(max_price),
             "o": "price",
             "page": page,
