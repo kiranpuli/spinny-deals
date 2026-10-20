@@ -229,7 +229,10 @@ def fetch_cheapest_cars(city, max_price=500000):
     for c in cars:
         price = c.get("price", 0)
         km = c.get("mileage", 0)
-        if price <= max_price and km <= 85000 and is_prestige_car(c):
+        cat = str(c.get("procurement_category", "")).lower()
+        cons_cat = str(c.get("consumer_procurement_category", "")).lower()
+        is_assured = cat in ["assured", "assured-plus"] or cons_cat in ["assured", "assured-plus"]
+        if price <= max_price and km <= 85000 and is_assured and is_prestige_car(c):
             filtered.append(c)
 
     filtered.sort(key=lambda x: x.get("price", 0))
