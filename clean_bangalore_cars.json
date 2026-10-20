@@ -270,6 +270,34 @@
     }
   },
   {
+    "id": 33151561,
+    "make": "Hyundai",
+    "model": "Elite i20",
+    "variant": "Magna 1.2",
+    "make_year": 2015,
+    "price": 461000.0,
+    "mileage": 69025,
+    "fuel_type": "petrol",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/elite-i20/magna-12-2015/33151561/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-19/a60fda24d9ac47319f9434191316c094/raw/file.JPG",
+    "hub": "Mysore Road, Kengeri",
+    "analysis": {
+      "pros": [
+        "Reliable brand backing",
+        "Good city drivability",
+        "Low maintenance"
+      ],
+      "cons": [
+        "Regular periodic maintenance required"
+      ],
+      "maintenance_yr": "\u20b95,000 - \u20b96,500",
+      "est_buyback_2yr": 322700,
+      "total_loss_2yr": 138300.0,
+      "monthly_loss": 5762
+    }
+  },
+  {
     "id": 32796033,
     "make": "Ford",
     "model": "Freestyle",
@@ -444,36 +472,6 @@
     }
   },
   {
-    "id": 32884967,
-    "make": "Hyundai",
-    "model": "Grand i10",
-    "variant": "Asta AT 1.2 Kappa VTVT (O)",
-    "make_year": 2016,
-    "price": 494000.0,
-    "mileage": 35286,
-    "fuel_type": "petrol",
-    "transmission": "automatic",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10/asta-at-12-kappa-vtvt-o-btm-layout-2016/32884967/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-04/d8b82e6abcb9474cadce998048f76d6d/raw/file.JPG",
-    "hub": "Vega City Mall, BTM Layout",
-    "analysis": {
-      "pros": [
-        "Feather-light clutch & steering for traffic",
-        "Spares available at every neighborhood garage",
-        "Upright seating with clear visibility"
-      ],
-      "cons": [
-        "1.1L engine strains on highway inclines",
-        "City fuel economy ~11-12 kmpl with AC",
-        "Dated dashboard styling"
-      ],
-      "maintenance_yr": "\u20b94,000 - \u20b95,000",
-      "est_buyback_2yr": 350740,
-      "total_loss_2yr": 143260.0,
-      "monthly_loss": 5969
-    }
-  },
-  {
     "id": 33243799,
     "make": "Hyundai",
     "model": "Grand i10",
@@ -532,48 +530,18 @@
     }
   },
   {
-    "id": 28705846,
+    "id": 26969250,
     "make": "Volkswagen",
-    "model": "Polo",
-    "variant": "Comfortline 1.2L (P)",
-    "make_year": 2016,
-    "price": 497000.0,
-    "mileage": 47076,
+    "model": "Ameo",
+    "variant": "Comfortline 1.0L (P)",
+    "make_year": 2019,
+    "price": 498000.0,
+    "mileage": 47774,
     "fuel_type": "petrol",
     "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/volkswagen/polo/comfortline-12l-p-malleshwaram-2016/28705846/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-08-04/97bac6a98a4943f4912861a07d3b3616/raw/file.JPG",
-    "hub": "Mantri Mall, Malleshwaram",
-    "analysis": {
-      "pros": [
-        "Unmatched German chassis stability & paint quality",
-        "Heavy doors with thud sound (5-star feel)",
-        "Timeless styling and prestige"
-      ],
-      "cons": [
-        "Higher parts cost if sensors fail",
-        "Tighter rear legroom",
-        "3-cylinder petrol is vocal at high RPM"
-      ],
-      "maintenance_yr": "\u20b97,500 - \u20b910,000",
-      "est_buyback_2yr": 372750,
-      "total_loss_2yr": 124250.0,
-      "monthly_loss": 5177
-    }
-  },
-  {
-    "id": 33040955,
-    "make": "Ford",
-    "model": "EcoSport",
-    "variant": "Titanium 1.0 Ecoboost (Opt)",
-    "make_year": 2015,
-    "price": 497000.0,
-    "mileage": 70193,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/ford/ecosport/titanium-10-ecoboost-opt-kengeri-2015/33040955/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-07/191348d6c01c4f708f4a6fdb07332a08/raw/file.JPG",
-    "hub": "Mysore Road, Kengeri",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/volkswagen/ameo/comfortline-10l-p-2019/26969250/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-19/5fa0541db15a4c85a12d2cfde4138a89/raw/file.JPG",
+    "hub": "Vega City Mall, BTM Layout",
     "analysis": {
       "pros": [
         "Reliable brand backing",
@@ -584,9 +552,39 @@
         "Regular periodic maintenance required"
       ],
       "maintenance_yr": "\u20b95,000 - \u20b96,500",
-      "est_buyback_2yr": 347900,
-      "total_loss_2yr": 149100.0,
-      "monthly_loss": 6212
+      "est_buyback_2yr": 348600,
+      "total_loss_2yr": 149400.0,
+      "monthly_loss": 6225
+    }
+  },
+  {
+    "id": 32884967,
+    "make": "Hyundai",
+    "model": "Grand i10",
+    "variant": "Asta AT 1.2 Kappa VTVT (O)",
+    "make_year": 2016,
+    "price": 498000.0,
+    "mileage": 35286,
+    "fuel_type": "petrol",
+    "transmission": "automatic",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10/asta-at-12-kappa-vtvt-o-btm-layout-2016/32884967/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-04/d8b82e6abcb9474cadce998048f76d6d/raw/file.JPG",
+    "hub": "Vega City Mall, BTM Layout",
+    "analysis": {
+      "pros": [
+        "Feather-light clutch & steering for traffic",
+        "Spares available at every neighborhood garage",
+        "Upright seating with clear visibility"
+      ],
+      "cons": [
+        "1.1L engine strains on highway inclines",
+        "City fuel economy ~11-12 kmpl with AC",
+        "Dated dashboard styling"
+      ],
+      "maintenance_yr": "\u20b94,000 - \u20b95,000",
+      "est_buyback_2yr": 353580,
+      "total_loss_2yr": 144420.0,
+      "monthly_loss": 6018
     }
   }
 ]
