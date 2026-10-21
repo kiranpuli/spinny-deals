@@ -386,6 +386,34 @@
     }
   },
   {
+    "id": 33180345,
+    "make": "Hyundai",
+    "model": "Xcent",
+    "variant": "S",
+    "make_year": 2017,
+    "price": 459000.0,
+    "mileage": 50248,
+    "fuel_type": "petrol",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/xcent/s-malleshwaram-2017/33180345/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-20/93f1a79dfef5436bb0b0c97c01ea805f/raw/file.JPG",
+    "hub": "Mantri Mall, Malleshwaram",
+    "analysis": {
+      "pros": [
+        "Reliable brand backing",
+        "Good city drivability",
+        "Low maintenance"
+      ],
+      "cons": [
+        "Regular periodic maintenance required"
+      ],
+      "maintenance_yr": "\u20b95,000 - \u20b96,500",
+      "est_buyback_2yr": 321300,
+      "total_loss_2yr": 137700.0,
+      "monthly_loss": 5738
+    }
+  },
+  {
     "id": 32318197,
     "make": "Tata",
     "model": "Tigor",
@@ -467,34 +495,6 @@
       "est_buyback_2yr": 324100,
       "total_loss_2yr": 138900.0,
       "monthly_loss": 5788
-    }
-  },
-  {
-    "id": 33227726,
-    "make": "Maruti Suzuki",
-    "model": "Ciaz",
-    "variant": "Sigma 1.4 MT",
-    "make_year": 2017,
-    "price": 476000.0,
-    "mileage": 84262,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/maruti-suzuki/ciaz/sigma-14-mt-2017/33227726/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-15/75f73a8026da452a8db01bcb84f0effd/raw/file.JPG",
-    "hub": "Mysore Road, Kengeri",
-    "analysis": {
-      "pros": [
-        "Reliable brand backing",
-        "Good city drivability",
-        "Low maintenance"
-      ],
-      "cons": [
-        "Regular periodic maintenance required"
-      ],
-      "maintenance_yr": "\u20b95,000 - \u20b96,500",
-      "est_buyback_2yr": 333200,
-      "total_loss_2yr": 142800.0,
-      "monthly_loss": 5950
     }
   }
 ]
