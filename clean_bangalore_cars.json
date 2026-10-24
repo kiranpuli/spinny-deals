@@ -60,6 +60,34 @@
     }
   },
   {
+    "id": 33366963,
+    "make": "Hyundai",
+    "model": "Xcent",
+    "variant": "S 1.2",
+    "make_year": 2015,
+    "price": 359000.0,
+    "mileage": 55421,
+    "fuel_type": "petrol",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/xcent/s-12-2016/33366963/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-23/0b790a0fe1614736ac3342c7cd723028/raw/file.JPG",
+    "hub": "Mysore Road, Kengeri",
+    "analysis": {
+      "pros": [
+        "Reliable brand backing",
+        "Good city drivability",
+        "Low maintenance"
+      ],
+      "cons": [
+        "Regular periodic maintenance required"
+      ],
+      "maintenance_yr": "\u20b95,000 - \u20b96,500",
+      "est_buyback_2yr": 251300,
+      "total_loss_2yr": 107700.0,
+      "monthly_loss": 4488
+    }
+  },
+  {
     "id": 32569478,
     "make": "Tata",
     "model": "Tiago",
@@ -298,6 +326,36 @@
     }
   },
   {
+    "id": 33340318,
+    "make": "Hyundai",
+    "model": "Grand i10",
+    "variant": "Sportz 1.2 Kappa VTVT",
+    "make_year": 2016,
+    "price": 430000.0,
+    "mileage": 27193,
+    "fuel_type": "petrol",
+    "transmission": "manual",
+    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10/sportz-12-kappa-vtvt-2016/33340318/",
+    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-23/a90145a2a3054329bde44f4ce05ee0e9/raw/file.JPG",
+    "hub": "Vega City Mall, BTM Layout",
+    "analysis": {
+      "pros": [
+        "Feather-light clutch & steering for traffic",
+        "Spares available at every neighborhood garage",
+        "Upright seating with clear visibility"
+      ],
+      "cons": [
+        "1.1L engine strains on highway inclines",
+        "City fuel economy ~11-12 kmpl with AC",
+        "Dated dashboard styling"
+      ],
+      "maintenance_yr": "\u20b94,000 - \u20b95,000",
+      "est_buyback_2yr": 305300,
+      "total_loss_2yr": 124700.0,
+      "monthly_loss": 5196
+    }
+  },
+  {
     "id": 32277280,
     "make": "Hyundai",
     "model": "Grand i10",
@@ -358,36 +416,6 @@
     }
   },
   {
-    "id": 33282869,
-    "make": "Hyundai",
-    "model": "Grand i10",
-    "variant": "Sportz (O) 1.2 Kappa VTVT",
-    "make_year": 2017,
-    "price": 449000.0,
-    "mileage": 39679,
-    "fuel_type": "petrol",
-    "transmission": "manual",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/hyundai/grand-i10/sportz-o-12-kappa-vtvt-malleshwaram-2017/33282869/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-20/9f5aa090186c428d82f056ef985ac58d/raw/file.JPG",
-    "hub": "Mantri Mall, Malleshwaram",
-    "analysis": {
-      "pros": [
-        "Feather-light clutch & steering for traffic",
-        "Spares available at every neighborhood garage",
-        "Upright seating with clear visibility"
-      ],
-      "cons": [
-        "1.1L engine strains on highway inclines",
-        "City fuel economy ~11-12 kmpl with AC",
-        "Dated dashboard styling"
-      ],
-      "maintenance_yr": "\u20b94,000 - \u20b95,000",
-      "est_buyback_2yr": 318790,
-      "total_loss_2yr": 130210.0,
-      "monthly_loss": 5425
-    }
-  },
-  {
     "id": 27881469,
     "make": "Honda",
     "model": "Amaze",
@@ -415,34 +443,6 @@
       "est_buyback_2yr": 332150,
       "total_loss_2yr": 122850.0,
       "monthly_loss": 5119
-    }
-  },
-  {
-    "id": 32318197,
-    "make": "Tata",
-    "model": "Tigor",
-    "variant": "Revotron XZA",
-    "make_year": 2018,
-    "price": 461000.0,
-    "mileage": 60170,
-    "fuel_type": "petrol",
-    "transmission": "automatic",
-    "url": "https://www.spinny.com/buy-used-cars/bangalore/tata/tigor/revotron-xza-btm-layout-2018/32318197/",
-    "img": "https://assets.spinny.com/sp-file-system/public/2026-10-09/52d404c896cb42e5897fb4ecf2ce0edb/raw/file.JPG",
-    "hub": "Vega City Mall, BTM Layout",
-    "analysis": {
-      "pros": [
-        "Reliable brand backing",
-        "Good city drivability",
-        "Low maintenance"
-      ],
-      "cons": [
-        "Regular periodic maintenance required"
-      ],
-      "maintenance_yr": "\u20b95,000 - \u20b96,500",
-      "est_buyback_2yr": 322700,
-      "total_loss_2yr": 138300.0,
-      "monthly_loss": 5762
     }
   },
   {
