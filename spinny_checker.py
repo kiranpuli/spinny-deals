@@ -172,7 +172,13 @@ def enrich_cars(cars):
             }
 
         price = c.get("price", 0)
-        retention_val = round(price * matched["retention_pct"])
+        cat = str(c.get("procurement_category", "")).lower()
+        cons_cat = str(c.get("consumer_procurement_category", "")).lower()
+        is_assured = cat in ["assured", "assured-plus"] or cons_cat in ["assured", "assured-plus"]
+        tier = "assured" if is_assured else "auction"
+
+        retention_pct = matched["retention_pct"] if is_assured else round(matched["retention_pct"] * 0.90, 2)
+        retention_val = round(price * retention_pct)
         total_loss_2yr = price - retention_val
         monthly_loss = round(total_loss_2yr / 24)
 
@@ -193,6 +199,9 @@ def enrich_cars(cars):
             "url": "https://www.spinny.com" + c.get("permanent_url", ""),
             "img": img_url,
             "hub": c.get("hub_short_name", "Bangalore"),
+            "category": tier,
+            "buyback_eligible": is_assured,
+            "buyback_label": "Spinny Assured Buyback" if is_assured else "Est. Market Resale (No Buyback)",
             "analysis": {
                 "pros": matched["pros"],
                 "cons": matched["cons"],
@@ -229,10 +238,7 @@ def fetch_cheapest_cars(city, max_price=500000):
     for c in cars:
         price = c.get("price", 0)
         km = c.get("mileage", 0)
-        cat = str(c.get("procurement_category", "")).lower()
-        cons_cat = str(c.get("consumer_procurement_category", "")).lower()
-        is_assured = cat in ["assured", "assured-plus"] or cons_cat in ["assured", "assured-plus"]
-        if price <= max_price and km <= 85000 and is_assured and is_prestige_car(c):
+        if price <= max_price and km <= 85000 and is_prestige_car(c):
             filtered.append(c)
 
     filtered.sort(key=lambda x: x.get("price", 0))

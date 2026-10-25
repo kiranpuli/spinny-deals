@@ -196,6 +196,19 @@ html_content = """<!DOCTYPE html>
       border-radius: 6px;
       letter-spacing: 0.5px;
     }
+    .badge-auction {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(245, 158, 11, 0.18);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
     .badge-hub {
       position: absolute;
       bottom: 8px;
@@ -354,6 +367,16 @@ html_content = """<!DOCTYPE html>
 
     <!-- Interactive Filter Panel -->
     <div class="filter-panel">
+      <!-- Tier Filter -->
+      <div class="filter-row">
+        <span class="filter-label">Listing Tier:</span>
+        <div class="btn-group" id="tier-filters">
+          <button class="pill active" data-key="tier" data-val="all" onclick="setFilter('tier', 'all', this)">All Deals</button>
+          <button class="pill" data-key="tier" data-val="assured" onclick="setFilter('tier', 'assured', this)">✓ Spinny Assured (Buyback)</button>
+          <button class="pill" data-key="tier" data-val="auction" onclick="setFilter('tier', 'auction', this)">⚡ Auction / Budget (Low Cost)</button>
+        </div>
+      </div>
+
       <!-- Budget Filter -->
       <div class="filter-row">
         <span class="filter-label">Max Budget:</span>
@@ -414,6 +437,7 @@ html_content = """<!DOCTYPE html>
     const ALL_CARS = """ + cars_json + """;
 
     const filters = {
+      tier: 'all',
       budget: 500000,
       brand: 'all',
       trans: 'all',
@@ -429,6 +453,7 @@ html_content = """<!DOCTYPE html>
     }
 
     function resetFilters() {
+      filters.tier = 'all';
       filters.budget = 500000;
       filters.brand = 'all';
       filters.trans = 'all';
@@ -446,6 +471,12 @@ html_content = """<!DOCTYPE html>
 
     function applyFilters() {
       let filtered = ALL_CARS.filter(c => {
+        // Tier (Assured vs Auction/Budget)
+        if (filters.tier !== 'all') {
+          const cTier = (c.category || 'auction').toLowerCase();
+          if (cTier !== filters.tier) return false;
+        }
+
         // Budget
         if (c.price > filters.budget) return false;
 
@@ -495,11 +526,16 @@ html_content = """<!DOCTYPE html>
         const estBuyback = '₹' + Math.round(an.est_buyback_2yr || 0).toLocaleString('en-IN');
         const totalLoss = '₹' + Math.round(an.total_loss_2yr || 0).toLocaleString('en-IN');
         const monthly = '₹' + Math.round(an.monthly_loss || 0).toLocaleString('en-IN') + '/mo';
+        const isAssured = car.category === 'assured';
+        const badgeHtml = isAssured
+          ? '<span class="badge-buyback">✓ Spinny Assured</span>'
+          : '<span class="badge-auction">⚡ Auction / Budget</span>';
+        const finLabel = isAssured ? '2-Yr Spinny Buyback' : '2-Yr Est. Market Resale';
 
         return `
           <div class="card">
             <div class="img-wrap">
-              <span class="badge-buyback">Assured Buyback</span>
+              ${badgeHtml}
               <span class="badge-hub">${car.hub}</span>
               ${imgUrl ? `<img src="${imgUrl}" alt="${title}" loading="lazy" />` : '<span style="color:#555;">No Image</span>'}
             </div>
@@ -510,15 +546,29 @@ html_content = """<!DOCTYPE html>
                   <span class="meta-chip">${km}</span>
                   <span class="meta-chip">${(car.fuel_type || 'Petrol').toUpperCase()}</span>
                   <span class="meta-chip">${(car.transmission || 'MT').toUpperCase()}</span>
+                  ${!isAssured ? '<span class="meta-chip" style="color:#f59e0b; border: 1px solid rgba(245,158,11,0.3);">Wholesale Stock</span>' : ''}
                 </div>
               </div>
 
               <!-- 2-Year Financial / Depreciation Box -->
               <div class="financials-box">
                 <div class="fin-item">
-                  <span class="fin-label">2-Yr Spinny Buyback</span>
+                  <span class="fin-label">${finLabel}</span>
                   <span class="fin-val">${estBuyback}</span>
                 </div>
+                <div class="fin-item">
+                  <span class="fin-label">Est. 2-Yr Net Loss</span>
+                  <span class="fin-val loss">${totalLoss}</span>
+                </div>
+                <div class="fin-item">
+                  <span class="fin-label">Monthly Depreciation</span>
+                  <span class="fin-val monthly">${monthly}</span>
+                </div>
+                <div class="fin-item">
+                  <span class="fin-label">Bangalore Maint/Yr</span>
+                  <span class="fin-val">${an.maintenance_yr || '₹5,000'}</span>
+                </div>
+              </div>
                 <div class="fin-item">
                   <span class="fin-label">Est. 2-Yr Net Loss</span>
                   <span class="fin-val loss">${totalLoss}</span>
