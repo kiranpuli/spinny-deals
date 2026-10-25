@@ -216,7 +216,7 @@ def enrich_cars(cars):
 
 def fetch_cheapest_cars(city, max_price=500000):
     cars = []
-    for page in range(1, 12):
+    for page in range(1, 15):
         params = {
             "city": city,
             "max_price": str(max_price),
@@ -238,7 +238,7 @@ def fetch_cheapest_cars(city, max_price=500000):
     for c in cars:
         price = c.get("price", 0)
         km = c.get("mileage", 0)
-        if price <= max_price and km <= 85000 and is_prestige_car(c):
+        if price <= max_price and km <= 100000 and is_prestige_car(c):
             filtered.append(c)
 
     filtered.sort(key=lambda x: x.get("price", 0))
