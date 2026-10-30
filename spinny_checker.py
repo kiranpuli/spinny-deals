@@ -172,6 +172,8 @@ def enrich_cars(cars):
             }
 
         price = c.get("price", 0)
+        km = c.get("mileage", 0)
+        year = c.get("make_year", 2012)
         cat = str(c.get("procurement_category", "")).lower()
         cons_cat = str(c.get("consumer_procurement_category", "")).lower()
         is_assured = cat in ["assured", "assured-plus"] or cons_cat in ["assured", "assured-plus"]
@@ -182,6 +184,40 @@ def enrich_cars(cars):
         total_loss_2yr = price - retention_val
         monthly_loss = round(total_loss_2yr / 24)
 
+        # Objective Deal Quality Scoring (0 - 100)
+        score = 40
+        if km <= 25000: score += 25
+        elif km <= 40000: score += 18
+        elif km <= 60000: score += 12
+        elif km > 80000: score -= 12
+
+        if year >= 2019: score += 22
+        elif year >= 2017: score += 16
+        elif year >= 2015: score += 10
+        elif year <= 2013: score -= 6
+
+        if is_assured: score += 16
+        if price <= 325000: score += 10
+        elif price <= 400000: score += 5
+        if monthly_loss <= 3500: score += 10
+        elif monthly_loss <= 4500: score += 5
+
+        final_score = min(99, max(42, score))
+        if final_score >= 80:
+            deal_grade = "TOP PICK"
+        elif final_score >= 68:
+            deal_grade = "GREAT VALUE"
+        else:
+            deal_grade = "FAIR DEAL"
+
+        reasons = []
+        if km <= 35000: reasons.append(f"Low Mileage ({km:,} km)")
+        if year >= 2017: reasons.append(f"Modern {year} Build")
+        if is_assured: reasons.append("Spinny Assured Buyback")
+        if monthly_loss <= 3600: reasons.append(f"Low Loss ₹{monthly_loss:,}/mo")
+        if price <= 300000: reasons.append("Sub-₹3L Budget")
+        if not reasons: reasons.append("Daily City Commuter")
+
         img_url = (c.get("without_bg_image", {}).get("file", {}).get("thumburl", "") or "")
         if img_url.startswith("//"):
             img_url = "https:" + img_url
@@ -191,9 +227,9 @@ def enrich_cars(cars):
             "make": c.get("make"),
             "model": c.get("model"),
             "variant": c.get("variant"),
-            "make_year": c.get("make_year"),
+            "make_year": year,
             "price": price,
-            "mileage": c.get("mileage"),
+            "mileage": km,
             "fuel_type": c.get("fuel_type"),
             "transmission": c.get("transmission"),
             "url": "https://www.spinny.com" + c.get("permanent_url", ""),
@@ -202,6 +238,10 @@ def enrich_cars(cars):
             "category": tier,
             "buyback_eligible": is_assured,
             "buyback_label": "Spinny Assured Buyback" if is_assured else "Est. Market Resale (No Buyback)",
+            "deal_score": final_score,
+            "deal_grade": deal_grade,
+            "is_top_deal": final_score >= 68,
+            "deal_highlights": reasons[:3],
             "analysis": {
                 "pros": matched["pros"],
                 "cons": matched["cons"],
