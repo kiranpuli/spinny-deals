@@ -2,7 +2,7 @@
 """
 Hallmark Redesign — Minimal, Debloated Used Car Screener
 Theme: Cobalt (Modern-Minimal / Precision Workbench)
-Discipline: Anti-AI-slop, zero card-in-card nesting, single-deck workbench controls, honest data.
+Discipline: Anti-AI-slop, zero card-in-card nesting, single-deck workbench controls, flexible continuous filters.
 """
 
 import json
@@ -167,8 +167,8 @@ html_content = """<!DOCTYPE html>
 
     .search-box {
       position: relative;
-      flex: 1 1 220px;
-      min-width: 190px;
+      flex: 1 1 200px;
+      min-width: 180px;
     }
     .search-box input {
       width: 100%;
@@ -210,6 +210,88 @@ html_content = """<!DOCTYPE html>
     }
     .filter-select:focus {
       border-color: var(--color-cobalt);
+    }
+
+    /* Flexible Continuous Price Controls */
+    .price-input-group {
+      display: inline-flex;
+      align-items: center;
+      background: var(--color-paper);
+      border: 1px solid var(--color-rule);
+      border-radius: var(--radius-md);
+      padding: 3px 8px;
+      gap: 5px;
+      transition: border-color 0.15s;
+    }
+    .price-input-group:focus-within {
+      border-color: var(--color-cobalt);
+    }
+    .price-input-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-ink-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      user-select: none;
+    }
+    .price-box {
+      width: 62px;
+      background: transparent;
+      border: none;
+      color: var(--color-ink);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 2px;
+      outline: none;
+      text-align: center;
+    }
+    .price-box::placeholder {
+      color: var(--color-ink-faint);
+      font-weight: 400;
+      font-size: 11px;
+    }
+    .price-box::-webkit-inner-spin-button,
+    .price-box::-webkit-outer-spin-button {
+      opacity: 0.35;
+    }
+    .range-dash {
+      color: var(--color-ink-faint);
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .price-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 72px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--color-rule);
+      outline: none;
+      cursor: pointer;
+      margin: 0 4px;
+      accent-color: var(--color-cobalt);
+    }
+    .price-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--color-cobalt);
+      cursor: pointer;
+    }
+    .btn-clear-inline {
+      background: transparent;
+      border: none;
+      color: var(--color-ink-faint);
+      font-size: 11px;
+      cursor: pointer;
+      padding: 2px 4px;
+      line-height: 1;
+    }
+    .btn-clear-inline:hover {
+      color: var(--color-ink);
     }
 
     .btn-top-toggle {
@@ -545,18 +627,15 @@ html_content = """<!DOCTYPE html>
         <option value="2014">2014+ (≤ 12 Yrs)</option>
       </select>
 
-      <!-- Max Budget (Unrestricted options) -->
-      <select id="ctrl-budget" class="filter-select" onchange="onSelectChange('budget', this.value)">
-        <option value="0">Budget: Any Price (No Limit)</option>
-        <option value="300000">Budget: ≤ ₹3.0 Lakhs</option>
-        <option value="400000">Budget: ≤ ₹4.0 Lakhs</option>
-        <option value="500000">Budget: ≤ ₹5.0 Lakhs</option>
-        <option value="600000">Budget: ≤ ₹6.0 Lakhs</option>
-        <option value="800000">Budget: ≤ ₹8.0 Lakhs</option>
-        <option value="1000000">Budget: ≤ ₹10.0 Lakhs</option>
-        <option value="1500000">Budget: ≤ ₹15.0 Lakhs</option>
-        <option value="2000000">Budget: ≤ ₹20.0 Lakhs</option>
-      </select>
+      <!-- Flexible Continuous Price Filter (Min / Max in ₹ Lakhs + Live Slider) -->
+      <div class="price-input-group" title="Set flexible budget in ₹ Lakhs (e.g. 4.5)">
+        <span class="price-input-label">₹L</span>
+        <input type="number" id="ctrl-min-price" class="price-box" min="0" max="30" step="0.1" placeholder="Min" oninput="onPriceChange()" />
+        <span class="range-dash">–</span>
+        <input type="number" id="ctrl-max-price" class="price-box" min="0" max="30" step="0.1" placeholder="Max (4.5)" oninput="onPriceChange()" />
+        <input type="range" id="ctrl-price-range" class="price-slider" min="2" max="20" step="0.25" value="20" oninput="onSliderChange(this.value)" title="Drag to adjust Max Budget" />
+        <button type="button" class="btn-clear-inline" onclick="clearPrice()" title="Clear price limit">✕</button>
+      </div>
 
       <!-- Brand -->
       <select id="ctrl-brand" class="filter-select" onchange="onSelectChange('brand', this.value)">
@@ -610,8 +689,8 @@ html_content = """<!DOCTYPE html>
       <span class="preset-label">Quick Filters:</span>
       <button class="preset-chip" onclick="applyPreset('polo', this)">Volkswagen Polo</button>
       <button class="preset-chip" onclick="applyPreset('city', this)">Honda City</button>
+      <button class="preset-chip" onclick="applyPreset('sub_45l', this)">Under ₹4.5L</button>
       <button class="preset-chip" onclick="applyPreset('auto_sub5', this)">Automatic &lt; ₹5L</button>
-      <button class="preset-chip" onclick="applyPreset('sub_4l', this)">Under ₹4.0L</button>
       <button class="preset-chip" onclick="applyPreset('low_km', this)">Low KM (&lt; 40k)</button>
       <button class="preset-chip" onclick="applyPreset('assured_only', this)">Spinny Assured</button>
 
@@ -630,7 +709,8 @@ html_content = """<!DOCTYPE html>
     const state = {
       search: '',
       min_year: 0,
-      budget: 0, // 0 means unrestricted
+      min_price: 0,
+      max_price: 0, // 0 = no cap
       brand: 'all',
       trans: 'all',
       tier: 'all',
@@ -647,13 +727,59 @@ html_content = """<!DOCTYPE html>
     }
 
     function onSelectChange(key, val) {
-      if (key === 'min_year' || key === 'budget') {
+      if (key === 'min_year') {
         state[key] = Number(val);
       } else {
         state[key] = val;
       }
       state.activePreset = null;
       document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
+      applyFilters();
+    }
+
+    function onPriceChange() {
+      const minVal = parseFloat(document.getElementById('ctrl-min-price').value);
+      const maxVal = parseFloat(document.getElementById('ctrl-max-price').value);
+
+      state.min_price = (!isNaN(minVal) && minVal > 0) ? minVal * 100000 : 0;
+      state.max_price = (!isNaN(maxVal) && maxVal > 0) ? maxVal * 100000 : 0;
+
+      const slider = document.getElementById('ctrl-price-range');
+      if (slider) {
+        if (state.max_price > 0 && maxVal <= 20) {
+          slider.value = maxVal;
+        } else if (state.max_price === 0) {
+          slider.value = 20;
+        }
+      }
+
+      state.activePreset = null;
+      document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
+      applyFilters();
+    }
+
+    function onSliderChange(val) {
+      const num = parseFloat(val);
+      const maxInput = document.getElementById('ctrl-max-price');
+      if (num >= 20) {
+        maxInput.value = '';
+        state.max_price = 0;
+      } else {
+        maxInput.value = num.toFixed(1);
+        state.max_price = num * 100000;
+      }
+      state.activePreset = null;
+      document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
+      applyFilters();
+    }
+
+    function clearPrice() {
+      document.getElementById('ctrl-min-price').value = '';
+      document.getElementById('ctrl-max-price').value = '';
+      const slider = document.getElementById('ctrl-price-range');
+      if (slider) slider.value = 20;
+      state.min_price = 0;
+      state.max_price = 0;
       applyFilters();
     }
 
@@ -671,7 +797,8 @@ html_content = """<!DOCTYPE html>
       // Reset base filters
       state.search = '';
       state.min_year = 0;
-      state.budget = 0;
+      state.min_price = 0;
+      state.max_price = 0;
       state.brand = 'all';
       state.trans = 'all';
       state.tier = 'all';
@@ -680,7 +807,10 @@ html_content = """<!DOCTYPE html>
 
       document.getElementById('ctrl-search').value = '';
       document.getElementById('ctrl-year').value = '0';
-      document.getElementById('ctrl-budget').value = '0';
+      document.getElementById('ctrl-min-price').value = '';
+      document.getElementById('ctrl-max-price').value = '';
+      const slider = document.getElementById('ctrl-price-range');
+      if (slider) slider.value = 20;
       document.getElementById('ctrl-brand').value = 'all';
       document.getElementById('ctrl-trans').value = 'all';
       document.getElementById('ctrl-tier').value = 'all';
@@ -695,14 +825,16 @@ html_content = """<!DOCTYPE html>
         state.search = 'city';
         document.getElementById('ctrl-brand').value = 'honda';
         document.getElementById('ctrl-search').value = 'city';
+      } else if (preset === 'sub_45l') {
+        state.max_price = 450000;
+        document.getElementById('ctrl-max-price').value = '4.5';
+        if (slider) slider.value = 4.5;
       } else if (preset === 'auto_sub5') {
         state.trans = 'automatic';
-        state.budget = 500000;
+        state.max_price = 500000;
         document.getElementById('ctrl-trans').value = 'automatic';
-        document.getElementById('ctrl-budget').value = '500000';
-      } else if (preset === 'sub_4l') {
-        state.budget = 400000;
-        document.getElementById('ctrl-budget').value = '400000';
+        document.getElementById('ctrl-max-price').value = '5.0';
+        if (slider) slider.value = 5.0;
       } else if (preset === 'low_km') {
         // Filtered dynamically
       } else if (preset === 'assured_only') {
@@ -716,7 +848,8 @@ html_content = """<!DOCTYPE html>
     function resetAll() {
       state.search = '';
       state.min_year = 0;
-      state.budget = 0;
+      state.min_price = 0;
+      state.max_price = 0;
       state.brand = 'all';
       state.trans = 'all';
       state.tier = 'all';
@@ -726,7 +859,10 @@ html_content = """<!DOCTYPE html>
 
       document.getElementById('ctrl-search').value = '';
       document.getElementById('ctrl-year').value = '0';
-      document.getElementById('ctrl-budget').value = '0';
+      document.getElementById('ctrl-min-price').value = '';
+      document.getElementById('ctrl-max-price').value = '';
+      const slider = document.getElementById('ctrl-price-range');
+      if (slider) slider.value = 20;
       document.getElementById('ctrl-brand').value = 'all';
       document.getElementById('ctrl-trans').value = 'all';
       document.getElementById('ctrl-tier').value = 'all';
@@ -750,7 +886,8 @@ html_content = """<!DOCTYPE html>
 
         if (state.min_year > 0 && (c.make_year || 0) < state.min_year) return false;
 
-        if (state.budget > 0 && (c.price || 0) > state.budget) return false;
+        if (state.min_price > 0 && (c.price || 0) < state.min_price) return false;
+        if (state.max_price > 0 && (c.price || 0) > state.max_price) return false;
 
         if (state.brand !== 'all') {
           const make = (c.make || '').toLowerCase();
@@ -796,7 +933,7 @@ html_content = """<!DOCTYPE html>
         grid.innerHTML = `
           <div class="empty-state">
             <h3>No matching vehicles found</h3>
-            <p>Try loosening your search filters or resetting to view all Bangalore inventory.</p>
+            <p>Try loosening your price window or clearing active filters to view all Bangalore inventory.</p>
             <button class="filter-select" onclick="resetAll()">Reset All Filters</button>
           </div>
         `;
