@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Spinny Cheapest Prestige Monitor for Bangalore
-Finds the lowest priced prestige cars (strictly <= 5 Lakhs) with Spinny Assured Buyback.
-Automatically rebuilds deals.html and fires desktop notifications on new deals.
+Spinny Bangalore Used Car Deal Monitor & Screener
+Crawls full Bangalore inventory with zero artificial price caps.
+Enriches listings with deal quality score (0-100), 2-year buyback retention, and maintenance data.
+Rebuilds deals.html automatically and dispatches notifications on new finds.
 """
 
 import argparse
@@ -16,19 +17,32 @@ from datetime import datetime
 API_URL = "https://api.spinny.com/v3/api/listing/v7/"
 
 PRESTIGE_MODELS = [
-    "city", "amaze", "brio", "jazz", "wr-v", "civic",
-    "polo", "vento", "ameo",
-    "rapid", "fabia",
-    "etios", "glanza", "yaris",
-    "i20", "elite i20", "verna", "creta", "venue", "xcent", "grand i10", "i10",
-    "baleno", "ciaz", "swift", "dzire", "brezza", "scross", "ignis", "a-star",
-    "ecosport", "figo", "aspire", "freestyle",
-    "tiago", "altroz", "tigor", "zest",
+    # German / European
+    "polo", "vento", "ameo", "passat", "jetta", "taigun", "virtus", "tiguan", "t-roc", "beetle",
+    "rapid", "fabia", "octavia", "superb", "kushaq", "slavia", "laura", "kodiaq", "yeti",
+    # Honda
+    "city", "amaze", "brio", "jazz", "wr-v", "civic", "cr-v", "elevate", "br-v", "accord",
+    # Toyota
+    "etios", "glanza", "yaris", "corolla", "camry", "innova", "fortuner", "hyryder", "urban cruiser",
+    # Hyundai
+    "i20", "elite i20", "verna", "creta", "venue", "xcent", "grand i10", "i10", "aura", "alcazar", "tucson", "elantra",
+    # Maruti
+    "baleno", "ciaz", "swift", "dzire", "brezza", "vitara brezza", "grand vitara", "scross", "s-cross", "ignis", "a-star", "ritz", "ertiga", "xl6", "fronx", "jimny",
+    # Ford
+    "ecosport", "figo", "aspire", "freestyle", "endeavour", "fiesta",
+    # Tata
+    "tiago", "altroz", "tigor", "zest", "nexon", "harrier", "safari", "punch", "hexa", "bolt",
+    # Kia
+    "seltos", "sonet", "carens", "carnival",
+    # Mahindra
+    "xuv300", "xuv500", "xuv700", "thar", "scorpio", "kuv100",
+    # Others
+    "compass", "duster", "terrano", "kiger", "magnite", "triber",
 ]
 
 EXCLUDE_MODELS = [
     "alto", "eeco", "omni", "s-presso", "spresso",
-    "celerio", "wagon r", "eon", "santro", "kwid", "nano",
+    "celerio", "wagon r", "eon", "santro", "kwid", "nano", "matiz", "spark",
 ]
 
 KNOWLEDGE_BASE = {
@@ -110,6 +124,36 @@ KNOWLEDGE_BASE = {
         "maintenance_yr": "₹5,000 - ₹6,500",
         "retention_pct": 0.72,
     },
+    "city": {
+        "pros": ["Legendary 1.5L i-VTEC benchmark performance", "Spacious executive rear legroom", "Superb highway high-speed cruising"],
+        "cons": ["Low ground clearance requires caution on tall Bangalore speed bumps", "Thin sheet metal on doors", "Basic sound insulation"],
+        "maintenance_yr": "₹6,000 - ₹8,000",
+        "retention_pct": 0.75,
+    },
+    "nexon": {
+        "pros": ["5-star Global NCAP crash test rating", "Class-leading 209mm ground clearance for waterlogging", "Plush ride over potholes"],
+        "cons": ["Thick A-pillar creates front-right blind spot", "AMT gearbox has noticeable shifts", "Interior panel fit can have minor gaps"],
+        "maintenance_yr": "₹6,000 - ₹8,000",
+        "retention_pct": 0.76,
+    },
+    "creta": {
+        "pros": ["Unmatched resale demand in India", "Ultra-smooth petrol engine and light city controls", "Feature-loaded cabin"],
+        "cons": ["Firm rear ride on sharp ruts", "Brakes have sharp initial bite", "Higher insurance renewal premiums"],
+        "maintenance_yr": "₹7,000 - ₹9,500",
+        "retention_pct": 0.78,
+    },
+    "baleno": {
+        "pros": ["Extremely frugal 18-20 kmpl fuel economy", "Spacious cabin with wide rear bench", "Cheapest spare parts in segment"],
+        "cons": ["Lightweight build quality", "Steering does not self-center eagerly at low speeds", "Thin paint finish"],
+        "maintenance_yr": "₹4,000 - ₹5,500",
+        "retention_pct": 0.78,
+    },
+    "ecosport": {
+        "pros": ["Heavy tank-like body integrity and solid doors", "Punchy performance with direct steering feel", "High 200mm ground clearance"],
+        "cons": ["Stiff low-speed suspension", "Tight rear legroom", "Ford service is independent garage reliant"],
+        "maintenance_yr": "₹6,500 - ₹8,500",
+        "retention_pct": 0.70,
+    },
 }
 
 HEADERS = {
@@ -144,20 +188,26 @@ def notify_mac(title, message):
 
 
 def is_prestige_car(car):
-    make = car.get("make", "").lower()
-    model = car.get("model", "").lower()
-    full_name = f"{make} {model}"
+    make = (car.get("make") or "").lower()
+    model = (car.get("model") or "").lower()
+    variant = (car.get("variant") or "").lower()
+    full_name = f"{make} {model} {variant}".strip()
 
     if any(ex in full_name for ex in EXCLUDE_MODELS):
         return False
 
-    return any(m in full_name for m in PRESTIGE_MODELS)
+    if any(m in full_name for m in PRESTIGE_MODELS):
+        return True
+
+    # If it's a recognised quality manufacturer and not a excluded tin can
+    reputable_makes = ["volkswagen", "honda", "toyota", "skoda", "hyundai", "ford", "tata", "kia", "mahindra", "jeep", "renault", "mg"]
+    return any(rm in make for rm in reputable_makes)
 
 
 def enrich_cars(cars):
     cleaned = []
     for c in cars:
-        model_name = c.get("model", "").lower()
+        model_name = (c.get("model") or "").lower()
         matched = None
         for k in KNOWLEDGE_BASE:
             if k in model_name:
@@ -165,10 +215,10 @@ def enrich_cars(cars):
                 break
         if not matched:
             matched = {
-                "pros": ["Reliable brand backing", "Good city drivability", "Low maintenance"],
+                "pros": ["Reliable brand backing with steady resale demand", "Smooth city drivability", "Predictable routine service upkeep"],
                 "cons": ["Regular periodic maintenance required"],
-                "maintenance_yr": "₹5,000 - ₹6,500",
-                "retention_pct": 0.70,
+                "maintenance_yr": "₹5,500 - ₹7,500",
+                "retention_pct": 0.72,
             }
 
         price = c.get("price", 0)
@@ -185,42 +235,34 @@ def enrich_cars(cars):
         monthly_loss = round(total_loss_2yr / 24)
 
         # Objective Deal Quality Scoring (0 - 100)
-        score = 40
-        if km <= 25000: score += 25
+        score = 45
+        if km <= 25000: score += 24
         elif km <= 40000: score += 18
         elif km <= 60000: score += 12
-        elif km > 80000: score -= 12
+        elif km <= 80000: score += 5
+        elif km > 100000: score -= 10
 
-        if year >= 2019: score += 22
-        elif year >= 2017: score += 16
-        elif year >= 2015: score += 10
+        if year >= 2021: score += 22
+        elif year >= 2019: score += 18
+        elif year >= 2017: score += 12
+        elif year >= 2015: score += 6
         elif year <= 2013: score -= 6
 
-        if is_assured: score += 16
-        if price <= 325000: score += 10
-        elif price <= 400000: score += 5
-        if monthly_loss <= 3500: score += 10
-        elif monthly_loss <= 4500: score += 5
+        if is_assured: score += 15
 
-        final_score = min(99, max(42, score))
+        # Value density bonus (low km relative to age)
+        if year >= 2018 and km <= 40000: score += 6
+
+        final_score = min(99, max(40, score))
         if final_score >= 80:
-            deal_grade = "TOP PICK"
+            deal_grade = "TOP DEAL"
         elif final_score >= 68:
-            deal_grade = "GREAT VALUE"
+            deal_grade = "VALUE PICK"
         else:
-            deal_grade = "FAIR DEAL"
+            deal_grade = "FAIR"
 
-        reasons = []
-        if km <= 35000: reasons.append(f"Low Mileage ({km:,} km)")
-        if year >= 2017: reasons.append(f"Modern {year} Build")
-        if is_assured: reasons.append("Spinny Assured Buyback")
-        if monthly_loss <= 3600: reasons.append(f"Low Loss ₹{monthly_loss:,}/mo")
-        if price <= 300000: reasons.append("Sub-₹3L Budget")
-        if not reasons: reasons.append("Daily City Commuter")
-
-        img_url = (c.get("without_bg_image", {}).get("file", {}).get("thumburl", "") or "")
-        if img_url.startswith("//"):
-            img_url = "https:" + img_url
+        pros = matched.get("pros", [])
+        verdict = pros[0] if pros else "Dependable commuter with accessible service network."
 
         cleaned.append({
             "id": c.get("id"),
@@ -228,24 +270,23 @@ def enrich_cars(cars):
             "model": c.get("model"),
             "variant": c.get("variant"),
             "make_year": year,
-            "price": price,
             "mileage": km,
+            "price": price,
             "fuel_type": c.get("fuel_type"),
             "transmission": c.get("transmission"),
-            "url": "https://www.spinny.com" + c.get("permanent_url", ""),
-            "img": img_url,
-            "hub": c.get("hub_short_name", "Bangalore"),
             "category": tier,
-            "buyback_eligible": is_assured,
-            "buyback_label": "Spinny Assured Buyback" if is_assured else "Est. Market Resale (No Buyback)",
+            "hub": c.get("hub") or "Bangalore Hub",
+            "img": c.get("showcase_image") or c.get("image"),
+            "url": f"https://www.spinny.com{c.get('permanent_url', '')}",
             "deal_score": final_score,
             "deal_grade": deal_grade,
             "is_top_deal": final_score >= 68,
-            "deal_highlights": reasons[:3],
+            "verdict": verdict,
             "analysis": {
                 "pros": matched["pros"],
                 "cons": matched["cons"],
                 "maintenance_yr": matched["maintenance_yr"],
+                "retention_pct": retention_pct,
                 "est_buyback_2yr": retention_val,
                 "total_loss_2yr": total_loss_2yr,
                 "monthly_loss": monthly_loss,
@@ -254,17 +295,21 @@ def enrich_cars(cars):
     return cleaned
 
 
-def fetch_cheapest_cars(city, max_price=500000):
+def fetch_cheapest_cars(city="bangalore", max_price=None, max_pages=48):
+    session = requests.Session()
+    session.headers.update(HEADERS)
     cars = []
-    for page in range(1, 15):
+
+    for page in range(1, max_pages + 1):
         params = {
             "city": city,
-            "max_price": str(max_price),
             "o": "price",
             "page": page,
         }
+        if max_price is not None and max_price > 0:
+            params["max_price"] = str(max_price)
         try:
-            res = requests.get(API_URL, params=params, headers=HEADERS, timeout=15)
+            res = session.get(API_URL, params=params, timeout=12)
             res.raise_for_status()
             page_results = res.json().get("results", [])
             if not page_results:
@@ -278,7 +323,8 @@ def fetch_cheapest_cars(city, max_price=500000):
     for c in cars:
         price = c.get("price", 0)
         km = c.get("mileage", 0)
-        if price <= max_price and km <= 100000 and is_prestige_car(c):
+        price_ok = True if (max_price is None or max_price <= 0) else (price <= max_price)
+        if price_ok and km <= 140000 and is_prestige_car(c):
             filtered.append(c)
 
     filtered.sort(key=lambda x: x.get("price", 0))
@@ -291,7 +337,6 @@ def update_deals_html(cleaned_cars):
     with open(json_path, "w") as f:
         json.dump(cleaned_cars, f, indent=2)
 
-    # Also sync /tmp for compatibility
     try:
         with open("/tmp/clean_bangalore_cars.json", "w") as f:
             json.dump(cleaned_cars, f, indent=2)
@@ -303,12 +348,12 @@ def update_deals_html(cleaned_cars):
         subprocess.run([sys.executable, script_path], capture_output=True)
 
 
-def run_monitor(city="bangalore", max_price=500000):
+def run_monitor(city="bangalore", max_price=None):
     cache_file = get_cache_file(city)
     seen_ids = load_seen_ids(cache_file)
     is_initial_run = len(seen_ids) == 0
 
-    matching_cars = fetch_cheapest_cars(city, max_price)
+    matching_cars = fetch_cheapest_cars(city=city, max_price=max_price)
     cleaned_cars = enrich_cars(matching_cars)
     new_cars = []
 
@@ -323,28 +368,30 @@ def run_monitor(city="bangalore", max_price=500000):
     # Rebuild deals.html with live data
     update_deals_html(cleaned_cars)
 
-    print(f"[{datetime.now()}] === Daily Bangalore Prestige Deals (<= ₹{max_price//100000}L) ===")
-    for idx, car in enumerate(matching_cars[:5], 1):
+    price_label = f"<= ₹{max_price//100000}L" if (max_price and max_price > 0) else "All Budgets"
+    print(f"[{datetime.now()}] === Bangalore Deals Screener ({price_label}) — Found {len(cleaned_cars)} Cars ===")
+    for idx, car in enumerate(cleaned_cars[:5], 1):
         title = f"{car.get('make_year')} {car.get('make')} {car.get('model')} {car.get('variant')}"
         price = f"₹{int(car.get('price', 0)):,}"
         km = f"{car.get('mileage', 0):,} km"
-        url = f"https://www.spinny.com{car.get('permanent_url', '')}"
+        url = car.get('url', '')
         print(f"{idx}. {title} | {price} | {km}\n   {url}")
 
     if not is_initial_run and new_cars:
         top_new = new_cars[0]
         title = f"{top_new.get('make_year')} {top_new.get('make')} {top_new.get('model')}"
         price = f"₹{int(top_new.get('price', 0)):,}"
-        notify_mac("New Spinny Deal in Bangalore!", f"{title} for {price} (Buyback Eligible)")
+        notify_mac("New Spinny Deal in Bangalore!", f"{title} for {price}")
         print(f"[{datetime.now()}] Alert dispatched for {len(new_cars)} new car(s).")
     else:
         print(f"[{datetime.now()}] Inventory refreshed. No new cars since last run.")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Spinny Cheapest Prestige Monitor")
+    parser = argparse.ArgumentParser(description="Spinny Bangalore Deals Screener & Monitor")
     parser.add_argument("--city", default="bangalore", help="Target city")
-    parser.add_argument("--max-price", type=int, default=500000, help="Max budget threshold")
+    parser.add_argument("--max-price", type=int, default=0, help="Max budget threshold (0 for unlimited)")
     args = parser.parse_args()
 
-    run_monitor(city=args.city, max_price=args.max_price)
+    max_p = None if args.max_price <= 0 else args.max_price
+    run_monitor(city=args.city, max_price=max_p)

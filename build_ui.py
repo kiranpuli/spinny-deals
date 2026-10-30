@@ -2,19 +2,23 @@
 """
 Hallmark Redesign — Minimal, Debloated Used Car Screener
 Theme: Cobalt (Modern-Minimal / Precision Workbench)
-Discipline: Anti-AI-slop, zero card-in-card, compact single-deck controls, honest data.
+Discipline: Anti-AI-slop, zero card-in-card nesting, single-deck workbench controls, honest data.
 """
 
 import json
 import os
+import shutil
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 json_path = os.path.join(DIR, "clean_bangalore_cars.json")
 if not os.path.exists(json_path):
     json_path = "/tmp/clean_bangalore_cars.json"
 
-with open(json_path) as f:
-    cars = json.load(f)
+if os.path.exists(json_path):
+    with open(json_path) as f:
+        cars = json.load(f)
+else:
+    cars = []
 
 # Ensure consistent deal scoring & concise verdicts
 for c in cars:
@@ -22,26 +26,24 @@ for c in cars:
     km = c.get("mileage", 100000)
     price = c.get("price", 500000)
     is_assured = c.get("category") == "assured"
-    monthly = c.get("analysis", {}).get("monthly_loss", 5000)
 
-    score = 40
-    if km <= 25000: score += 25
+    score = 45
+    if km <= 25000: score += 24
     elif km <= 40000: score += 18
     elif km <= 60000: score += 12
-    elif km > 80000: score -= 12
+    elif km <= 80000: score += 5
+    elif km > 100000: score -= 10
 
-    if year >= 2019: score += 22
-    elif year >= 2017: score += 16
-    elif year >= 2015: score += 10
+    if year >= 2021: score += 22
+    elif year >= 2019: score += 18
+    elif year >= 2017: score += 12
+    elif year >= 2015: score += 6
     elif year <= 2013: score -= 6
 
-    if is_assured: score += 16
-    if price <= 325000: score += 10
-    elif price <= 400000: score += 5
-    if monthly <= 3500: score += 10
-    elif monthly <= 4500: score += 5
+    if is_assured: score += 15
+    if year >= 2018 and km <= 40000: score += 6
 
-    final_score = min(99, max(42, score))
+    final_score = min(99, max(40, score))
     c["deal_score"] = final_score
     c["is_top_deal"] = final_score >= 68
     c["deal_grade"] = "TOP DEAL" if final_score >= 80 else ("VALUE PICK" if final_score >= 68 else "FAIR")
@@ -73,19 +75,19 @@ html_content = """<!DOCTYPE html>
       --color-paper: #090d16;
       --color-surface: #101622;
       --color-surface-hover: #141c2c;
-      --color-rule: #1b2436;
-      --color-rule-subtle: #141b2a;
+      --color-rule: #1e283d;
+      --color-rule-subtle: #151d2c;
 
       --color-ink: #f8fafc;
       --color-ink-muted: #94a3b8;
       --color-ink-faint: #64748b;
 
       --color-cobalt: #3b82f6;
-      --color-cobalt-glow: rgba(59, 130, 246, 0.15);
+      --color-cobalt-glow: rgba(59, 130, 246, 0.16);
       --color-emerald: #10b981;
-      --color-emerald-bg: rgba(16, 185, 129, 0.12);
+      --color-emerald-bg: rgba(16, 185, 129, 0.14);
       --color-amber: #f59e0b;
-      --color-amber-bg: rgba(245, 158, 11, 0.12);
+      --color-amber-bg: rgba(245, 158, 11, 0.14);
 
       --radius-sm: 4px;
       --radius-md: 6px;
@@ -103,7 +105,7 @@ html_content = """<!DOCTYPE html>
     }
 
     .shell {
-      max-width: 1360px;
+      max-width: 1380px;
       margin: 0 auto;
       padding: 24px 20px 80px 20px;
     }
@@ -119,22 +121,23 @@ html_content = """<!DOCTYPE html>
       border-bottom: 1px solid var(--color-rule);
       margin-bottom: 20px;
     }
-    .masthead h1 {
+    .masthead-title {
       font-family: var(--font-display);
       font-size: clamp(22px, 3vw, 28px);
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--color-ink);
     }
-    .masthead p {
+    .masthead-sub {
       font-size: 13.5px;
       color: var(--color-ink-muted);
-      margin-top: 2px;
+      margin-top: 3px;
     }
     .masthead-meta {
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
     .meta-tag {
       font-family: var(--font-mono);
@@ -149,23 +152,23 @@ html_content = """<!DOCTYPE html>
       color: var(--color-ink);
     }
 
-    /* Debloated Single-Deck Filter Bar */
+    /* Workbench Control Deck */
     .control-deck {
       background: var(--color-surface);
       border: 1px solid var(--color-rule);
       border-radius: var(--radius-lg);
-      padding: 12px 16px;
-      margin-bottom: 20px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .search-box {
       position: relative;
-      flex: 1 1 200px;
-      min-width: 180px;
+      flex: 1 1 220px;
+      min-width: 190px;
     }
     .search-box input {
       width: 100%;
@@ -209,14 +212,13 @@ html_content = """<!DOCTYPE html>
       border-color: var(--color-cobalt);
     }
 
-    /* Top Deals Toggle Button */
-    .toggle-top-deals {
+    .btn-top-toggle {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       background: var(--color-paper);
       border: 1px solid var(--color-rule);
-      padding: 6px 12px;
+      padding: 7px 12px;
       border-radius: var(--radius-md);
       font-family: var(--font-mono);
       font-size: 12px;
@@ -226,17 +228,17 @@ html_content = """<!DOCTYPE html>
       user-select: none;
       transition: all 0.15s;
     }
-    .toggle-top-deals:hover {
+    .btn-top-toggle:hover {
       border-color: var(--color-ink-faint);
       color: var(--color-ink);
     }
-    .toggle-top-deals.active {
+    .btn-top-toggle.active {
       background: var(--color-cobalt-glow);
       border-color: var(--color-cobalt);
       color: var(--color-cobalt);
     }
 
-    .btn-clear {
+    .btn-reset {
       background: transparent;
       border: none;
       color: var(--color-ink-faint);
@@ -244,9 +246,9 @@ html_content = """<!DOCTYPE html>
       font-size: 11.5px;
       cursor: pointer;
       text-decoration: underline;
-      padding: 4px;
+      padding: 6px 8px;
     }
-    .btn-clear:hover {
+    .btn-reset:hover {
       color: var(--color-ink);
     }
 
@@ -260,6 +262,13 @@ html_content = """<!DOCTYPE html>
       font-size: 12px;
       color: var(--color-ink-faint);
     }
+    .preset-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
     .preset-chip {
       background: transparent;
       border: 1px solid var(--color-rule);
@@ -267,7 +276,7 @@ html_content = """<!DOCTYPE html>
       color: var(--color-ink-muted);
       font-family: var(--font-mono);
       font-size: 11px;
-      padding: 3px 8px;
+      padding: 3px 9px;
       cursor: pointer;
       transition: all 0.12s;
     }
@@ -294,7 +303,7 @@ html_content = """<!DOCTYPE html>
     /* Grid Layout */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 370px), 1fr));
       gap: 18px;
     }
 
@@ -314,18 +323,23 @@ html_content = """<!DOCTYPE html>
     }
 
     .card-photo {
-      height: 185px;
+      height: 190px;
       background: #06090e;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       border-bottom: 1px solid var(--color-rule-subtle);
+      overflow: hidden;
     }
     .card-photo img {
-      max-width: 90%;
-      max-height: 88%;
-      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.2s ease;
+    }
+    .card:hover .card-photo img {
+      transform: scale(1.02);
     }
 
     .tag-grade {
@@ -338,20 +352,21 @@ html_content = """<!DOCTYPE html>
       padding: 2px 7px;
       border-radius: var(--radius-sm);
       letter-spacing: 0.04em;
+      z-index: 2;
     }
     .tag-grade.top {
-      background: rgba(251, 191, 36, 0.15);
-      border: 1px solid rgba(251, 191, 36, 0.4);
-      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.9);
+      color: #000;
+      border: 1px solid rgba(245, 158, 11, 1);
     }
     .tag-grade.value {
-      background: var(--color-emerald-bg);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      color: var(--color-emerald);
+      background: rgba(16, 185, 129, 0.9);
+      color: #000;
+      border: 1px solid rgba(16, 185, 129, 1);
     }
     .tag-grade.fair {
-      background: rgba(148, 163, 184, 0.1);
-      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.3);
       color: var(--color-ink-muted);
     }
 
@@ -363,13 +378,14 @@ html_content = """<!DOCTYPE html>
       font-size: 10.5px;
       padding: 2px 7px;
       border-radius: var(--radius-sm);
-      background: rgba(9, 13, 22, 0.85);
+      background: rgba(9, 13, 22, 0.88);
       border: 1px solid var(--color-rule);
       color: var(--color-ink-muted);
+      z-index: 2;
     }
     .tag-tier.assured {
       color: var(--color-emerald);
-      border-color: rgba(16, 185, 129, 0.3);
+      border-color: rgba(16, 185, 129, 0.4);
     }
 
     .card-body {
@@ -406,7 +422,7 @@ html_content = """<!DOCTYPE html>
     /* Single Clean Metrics Strip */
     .metrics-strip {
       display: grid;
-      grid-template-columns: 1fr 1fr 1.2fr;
+      grid-template-columns: 1fr 1.1fr 1.1fr;
       background: var(--color-paper);
       border: 1px solid var(--color-rule-subtle);
       border-radius: var(--radius-md);
@@ -463,7 +479,7 @@ html_content = """<!DOCTYPE html>
       font-family: var(--font-mono);
       font-size: 11.5px;
       font-weight: 600;
-      padding: 7px 12px;
+      padding: 8px 12px;
       border-radius: var(--radius-sm);
       text-decoration: none;
       transition: all 0.15s ease;
@@ -500,8 +516,8 @@ html_content = """<!DOCTYPE html>
     <!-- Masthead -->
     <header class="masthead">
       <div>
-        <h1>Bangalore Used Car Deals Screener</h1>
-        <p>Curated Spinny Assured &amp; Auction inventory with 2-year depreciation and buyback retention.</p>
+        <h1 class="masthead-title">Bangalore Used Cars · Hallmark Screener</h1>
+        <p class="masthead-sub">Uncapped Bangalore inventory with 2-year buyback retention and depreciation telemetry.</p>
       </div>
       <div class="masthead-meta">
         <span class="meta-tag">City: <strong>Bangalore</strong></span>
@@ -509,38 +525,42 @@ html_content = """<!DOCTYPE html>
       </div>
     </header>
 
-    <!-- Debloated Single-Deck Filter Bar -->
+    <!-- Debloated Single-Deck Workbench Controls -->
     <div class="control-deck">
       <!-- Search Input -->
       <div class="search-box">
         <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
-        <input type="text" id="ctrl-search" placeholder="Search model, variant, hub..." oninput="onSearch(this.value)" />
+        <input type="text" id="ctrl-search" placeholder="Search model, hub, variant..." oninput="onSearch(this.value)" />
       </div>
 
       <!-- Make Year Filter -->
       <select id="ctrl-year" class="filter-select" onchange="onSelectChange('min_year', this.value)">
-        <option value="0">All Years</option>
+        <option value="0">Year: All Years</option>
+        <option value="2022">2022+ (≤ 4 Yrs)</option>
+        <option value="2020">2020+ (≤ 6 Yrs)</option>
         <option value="2018">2018+ (≤ 8 Yrs)</option>
-        <option value="2017">2017+ (≤ 9 Yrs)</option>
         <option value="2016">2016+ (≤ 10 Yrs)</option>
-        <option value="2015">2015+</option>
-        <option value="2014">2014+</option>
+        <option value="2014">2014+ (≤ 12 Yrs)</option>
       </select>
 
-      <!-- Max Budget -->
+      <!-- Max Budget (Unrestricted options) -->
       <select id="ctrl-budget" class="filter-select" onchange="onSelectChange('budget', this.value)">
-        <option value="500000">Budget: All (≤ ₹5.0L)</option>
-        <option value="400000">Budget: ≤ ₹4.0 Lakhs</option>
-        <option value="350000">Budget: ≤ ₹3.5 Lakhs</option>
+        <option value="0">Budget: Any Price (No Limit)</option>
         <option value="300000">Budget: ≤ ₹3.0 Lakhs</option>
-        <option value="250000">Budget: ≤ ₹2.5 Lakhs</option>
+        <option value="400000">Budget: ≤ ₹4.0 Lakhs</option>
+        <option value="500000">Budget: ≤ ₹5.0 Lakhs</option>
+        <option value="600000">Budget: ≤ ₹6.0 Lakhs</option>
+        <option value="800000">Budget: ≤ ₹8.0 Lakhs</option>
+        <option value="1000000">Budget: ≤ ₹10.0 Lakhs</option>
+        <option value="1500000">Budget: ≤ ₹15.0 Lakhs</option>
+        <option value="2000000">Budget: ≤ ₹20.0 Lakhs</option>
       </select>
 
       <!-- Brand -->
       <select id="ctrl-brand" class="filter-select" onchange="onSelectChange('brand', this.value)">
-        <option value="all">All Brands</option>
+        <option value="all">Brand: All Brands</option>
         <option value="volkswagen">Volkswagen</option>
         <option value="honda">Honda</option>
         <option value="hyundai">Hyundai</option>
@@ -548,6 +568,9 @@ html_content = """<!DOCTYPE html>
         <option value="tata">Tata</option>
         <option value="ford">Ford</option>
         <option value="toyota">Toyota</option>
+        <option value="skoda">Skoda</option>
+        <option value="kia">Kia</option>
+        <option value="mahindra">Mahindra</option>
       </select>
 
       <!-- Gearbox -->
@@ -559,28 +582,38 @@ html_content = """<!DOCTYPE html>
 
       <!-- Tier -->
       <select id="ctrl-tier" class="filter-select" onchange="onSelectChange('tier', this.value)">
-        <option value="all">Tier: All</option>
+        <option value="all">Tier: All Stock</option>
         <option value="assured">Spinny Assured (Buyback)</option>
-        <option value="auction">Auction / Wholesale</option>
+        <option value="auction">Wholesale / Budget Stock</option>
+      </select>
+
+      <!-- Sort -->
+      <select id="ctrl-sort" class="filter-select" onchange="onSelectChange('sort', this.value)">
+        <option value="score">Sort: Best Value Score</option>
+        <option value="price_asc">Price: Low to High</option>
+        <option value="price_desc">Price: High to Low</option>
+        <option value="year_desc">Year: Newest First</option>
+        <option value="km_asc">Mileage: Lowest KM</option>
       </select>
 
       <!-- Top Deals Toggle -->
-      <button id="btn-top-deals" class="toggle-top-deals active" onclick="toggleTopDeals()">
+      <button id="btn-top-deals" class="btn-top-toggle" onclick="toggleTopDeals(this)">
         <span>⭐ Top Deals Only</span>
       </button>
 
       <!-- Clear Filters -->
-      <button class="btn-clear" onclick="resetAll()">Reset</button>
+      <button class="btn-reset" onclick="resetAll()">Reset</button>
     </div>
 
     <!-- Quick Presets Row -->
     <div class="presets-bar">
-      <span>Quick Picks:</span>
-      <button class="preset-chip" onclick="applyPreset('polo')">Volkswagen Polo (7)</button>
-      <button class="preset-chip" onclick="applyPreset('auto_sub35')">Automatic &lt; ₹3.5L</button>
-      <button class="preset-chip" onclick="applyPreset('sub_3l')">Under ₹3.0L</button>
-      <button class="preset-chip" onclick="applyPreset('low_km')">Low KM (&lt; 40k)</button>
-      <button class="preset-chip" onclick="applyPreset('assured_only')">100% Assured Buyback</button>
+      <span class="preset-label">Quick Filters:</span>
+      <button class="preset-chip" onclick="applyPreset('polo', this)">Volkswagen Polo</button>
+      <button class="preset-chip" onclick="applyPreset('city', this)">Honda City</button>
+      <button class="preset-chip" onclick="applyPreset('auto_sub5', this)">Automatic &lt; ₹5L</button>
+      <button class="preset-chip" onclick="applyPreset('sub_4l', this)">Under ₹4.0L</button>
+      <button class="preset-chip" onclick="applyPreset('low_km', this)">Low KM (&lt; 40k)</button>
+      <button class="preset-chip" onclick="applyPreset('assured_only', this)">Spinny Assured</button>
 
       <div class="counter-line">
         Showing <strong id="res-count">0</strong> vehicles
@@ -597,11 +630,12 @@ html_content = """<!DOCTYPE html>
     const state = {
       search: '',
       min_year: 0,
-      budget: 500000,
+      budget: 0, // 0 means unrestricted
       brand: 'all',
       trans: 'all',
       tier: 'all',
-      topDealsOnly: true,
+      sort: 'score',
+      topDealsOnly: false,
       activePreset: null
     };
 
@@ -613,46 +647,64 @@ html_content = """<!DOCTYPE html>
     }
 
     function onSelectChange(key, val) {
-      state[key] = (key === 'min_year' || key === 'budget') ? Number(val) : val;
+      if (key === 'min_year' || key === 'budget') {
+        state[key] = Number(val);
+      } else {
+        state[key] = val;
+      }
       state.activePreset = null;
       document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
       applyFilters();
     }
 
-    function toggleTopDeals() {
+    function toggleTopDeals(btn) {
       state.topDealsOnly = !state.topDealsOnly;
-      document.getElementById('btn-top-deals').classList.toggle('active', state.topDealsOnly);
+      if (btn) btn.classList.toggle('active', state.topDealsOnly);
       applyFilters();
     }
 
-    function applyPreset(preset) {
+    function applyPreset(preset, el) {
       state.activePreset = preset;
       document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
-      event.target.classList.add('active');
+      if (el) el.classList.add('active');
 
       // Reset base filters
       state.search = '';
       state.min_year = 0;
-      state.budget = 500000;
+      state.budget = 0;
       state.brand = 'all';
       state.trans = 'all';
       state.tier = 'all';
       state.topDealsOnly = false;
       document.getElementById('btn-top-deals').classList.remove('active');
 
+      document.getElementById('ctrl-search').value = '';
+      document.getElementById('ctrl-year').value = '0';
+      document.getElementById('ctrl-budget').value = '0';
+      document.getElementById('ctrl-brand').value = 'all';
+      document.getElementById('ctrl-trans').value = 'all';
+      document.getElementById('ctrl-tier').value = 'all';
+
       if (preset === 'polo') {
+        state.brand = 'volkswagen';
         state.search = 'polo';
+        document.getElementById('ctrl-brand').value = 'volkswagen';
         document.getElementById('ctrl-search').value = 'polo';
-      } else if (preset === 'auto_sub35') {
+      } else if (preset === 'city') {
+        state.brand = 'honda';
+        state.search = 'city';
+        document.getElementById('ctrl-brand').value = 'honda';
+        document.getElementById('ctrl-search').value = 'city';
+      } else if (preset === 'auto_sub5') {
         state.trans = 'automatic';
-        state.budget = 350000;
+        state.budget = 500000;
         document.getElementById('ctrl-trans').value = 'automatic';
-        document.getElementById('ctrl-budget').value = '350000';
-      } else if (preset === 'sub_3l') {
-        state.budget = 300000;
-        document.getElementById('ctrl-budget').value = '300000';
+        document.getElementById('ctrl-budget').value = '500000';
+      } else if (preset === 'sub_4l') {
+        state.budget = 400000;
+        document.getElementById('ctrl-budget').value = '400000';
       } else if (preset === 'low_km') {
-        // Handled in filter
+        // Filtered dynamically
       } else if (preset === 'assured_only') {
         state.tier = 'assured';
         document.getElementById('ctrl-tier').value = 'assured';
@@ -664,20 +716,22 @@ html_content = """<!DOCTYPE html>
     function resetAll() {
       state.search = '';
       state.min_year = 0;
-      state.budget = 500000;
+      state.budget = 0;
       state.brand = 'all';
       state.trans = 'all';
       state.tier = 'all';
-      state.topDealsOnly = true;
+      state.sort = 'score';
+      state.topDealsOnly = false;
       state.activePreset = null;
 
       document.getElementById('ctrl-search').value = '';
       document.getElementById('ctrl-year').value = '0';
-      document.getElementById('ctrl-budget').value = '500000';
+      document.getElementById('ctrl-budget').value = '0';
       document.getElementById('ctrl-brand').value = 'all';
       document.getElementById('ctrl-trans').value = 'all';
       document.getElementById('ctrl-tier').value = 'all';
-      document.getElementById('btn-top-deals').classList.add('active');
+      document.getElementById('ctrl-sort').value = 'score';
+      document.getElementById('btn-top-deals').classList.remove('active');
       document.querySelectorAll('.preset-chip').forEach(b => b.classList.remove('active'));
 
       applyFilters();
@@ -687,15 +741,16 @@ html_content = """<!DOCTYPE html>
       let filtered = CARS.filter(c => {
         if (state.topDealsOnly && !c.is_top_deal) return false;
 
-        if (state.activePreset === 'low_km' && c.mileage > 40000) return false;
+        if (state.activePreset === 'low_km' && (c.mileage || 0) > 40000) return false;
 
         if (state.search) {
-          const text = `${c.make_year} ${c.make} ${c.model} ${c.variant} ${c.hub}`.toLowerCase();
+          const text = `${c.make_year} ${c.make} ${c.model} ${c.variant} ${c.hub} ${c.transmission} ${c.fuel_type}`.toLowerCase();
           if (!text.includes(state.search)) return false;
         }
 
         if (state.min_year > 0 && (c.make_year || 0) < state.min_year) return false;
-        if (c.price > state.budget) return false;
+
+        if (state.budget > 0 && (c.price || 0) > state.budget) return false;
 
         if (state.brand !== 'all') {
           const make = (c.make || '').toLowerCase();
@@ -704,7 +759,7 @@ html_content = """<!DOCTYPE html>
 
         if (state.trans !== 'all') {
           const t = (c.transmission || '').toLowerCase();
-          const isAuto = t.includes('auto') || t.includes('amt') || t.includes('at') || t.includes('cvt');
+          const isAuto = t.includes('auto') || t.includes('amt') || t.includes('at') || t.includes('cvt') || t.includes('dsg') || t.includes('dct');
           if (state.trans === 'automatic' && !isAuto) return false;
           if (state.trans === 'manual' && isAuto) return false;
         }
@@ -717,8 +772,19 @@ html_content = """<!DOCTYPE html>
         return true;
       });
 
-      // Default sort by deal score descending
-      filtered.sort((a, b) => (b.deal_score || 0) - (a.deal_score || 0));
+      // Sorting
+      if (state.sort === 'price_asc') {
+        filtered.sort((a, b) => (a.price || 0) - (b.price || 0));
+      } else if (state.sort === 'price_desc') {
+        filtered.sort((a, b) => (b.price || 0) - (a.price || 0));
+      } else if (state.sort === 'year_desc') {
+        filtered.sort((a, b) => (b.make_year || 0) - (a.make_year || 0));
+      } else if (state.sort === 'km_asc') {
+        filtered.sort((a, b) => (a.mileage || 0) - (b.mileage || 0));
+      } else {
+        // Default: deal_score descending
+        filtered.sort((a, b) => (b.deal_score || 0) - (a.deal_score || 0));
+      }
 
       document.getElementById('res-count').textContent = filtered.length;
       render(filtered);
@@ -730,7 +796,7 @@ html_content = """<!DOCTYPE html>
         grid.innerHTML = `
           <div class="empty-state">
             <h3>No matching vehicles found</h3>
-            <p>Try clearing your active filters or toggling off "Top Deals Only".</p>
+            <p>Try loosening your search filters or resetting to view all Bangalore inventory.</p>
             <button class="filter-select" onclick="resetAll()">Reset All Filters</button>
           </div>
         `;
@@ -741,13 +807,13 @@ html_content = """<!DOCTYPE html>
         const isAssured = c.category === 'assured';
         const price = '₹' + (c.price / 100000).toFixed(2) + 'L';
         const km = (c.mileage / 1000).toFixed(0) + 'k km';
-        const title = `${c.make_year} ${c.make} ${c.model} ${c.variant || ''}`;
+        const title = `${c.make_year} ${c.make} ${c.model} ${c.variant || ''}`.trim();
         const an = c.analysis || {};
         const buyback = '₹' + ((an.est_buyback_2yr || 0) / 100000).toFixed(2) + 'L';
         const monthly = '₹' + Math.round(an.monthly_loss || 0).toLocaleString('en-IN') + '/mo';
 
         let gradeClass = 'fair';
-        let gradeLabel = 'Fair Deal';
+        let gradeLabel = `Score ${c.deal_score}`;
         if (c.deal_score >= 80) {
           gradeClass = 'top';
           gradeLabel = `💎 ${c.deal_score} · TOP DEAL`;
@@ -818,4 +884,8 @@ deals_path = os.path.join(DIR, "deals.html")
 with open(deals_path, "w") as f:
     f.write(html_content)
 
-print(f"Hallmark debloated UI written to {deals_path}")
+# Also sync index.html
+index_path = os.path.join(DIR, "index.html")
+shutil.copyfile(deals_path, index_path)
+
+print(f"Hallmark debloated UI written to {deals_path} and synced to {index_path}")
